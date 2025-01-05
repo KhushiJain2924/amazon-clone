@@ -1,4 +1,6 @@
-const products = [
+
+
+export const products = [
   {
     id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
     image: "images/products/athletic-cotton-socks-6-pairs.jpg",
@@ -656,5 +658,25 @@ const products = [
       "apparel",
       "mens"
     ]
+  },
+  {
+    id1: "uniqueId-1",
+    image: "images/products/backpack.jpg",
+    name: "New backpack in stock",
+    rating:{
+      stars: 4.5,
+      count: 7843
+    },
+    priceCents: 3000,
+  },
+  {
+    id: "uniqueId-2",
+    image: "images/products/umbrella.jpg",
+    name: "umberalla",
+    rating: {
+      stars: 4.0,
+      count: 4567
+    },
+    priceCents: 6789
   }
 ];
