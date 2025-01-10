@@ -1,26 +1,27 @@
-import {cart} from '../data/cart.js';
+import {cart, addToCart,updateCartQuantity ,calculateCartQuantity} from '../data/cart.js';
 import {products} from '../data/products.js';
+import { formatCurrency } from './utils/money.js';
 
-[{
-  image: 'images/products/athletic-cotton-socks-6-pairs.jpg',
-  name: 'Black and Gray Athletic Cotton Socks - 6 Pairs',
-  rating: {
-    stars: 4.5,
-    count: 87
-  },
-  priceCents: 1090
-},
-{
-  image: 'images/products/intermediate-composite-basketball.jpg',
-  name: 'Intermediate Size Basketball',
-  rating:{
-    stars: 4.0,
-    count: 127
-  },
-  priceCents: 2095
-}]
+// [{
+//   image: 'images/products/athletic-cotton-socks-6-pairs.jpg',
+//   name: 'Black and Gray Athletic Cotton Socks - 6 Pairs',
+//   rating: {
+//     stars: 4.5,
+//     count: 87
+//   },
+//   priceCents: 1090
+// },
+// {
+//   image: 'images/products/intermediate-composite-basketball.jpg',
+//   name: 'Intermediate Size Basketball',
+//   rating:{
+//     stars: 4.0,
+//     count: 127
+//   },
+//   priceCents: 2095
+// }]
 
-let productsHTML =''
+let productsHTML ='';
 
 products.forEach((product)=>{
   productsHTML += `
@@ -43,7 +44,7 @@ products.forEach((product)=>{
           </div>
 
           <div class="product-price">
-            $${(product.priceCents/100).toFixed(2)}
+            $${formatCurrency(product.priceCents)}
           </div>
 
           <div class="product-quantity-container">
@@ -69,7 +70,7 @@ products.forEach((product)=>{
           </div>
 
           <button class="add-to-cart-button button-primary js-add-to-cart"
-          data-product-Id = "${product.id}">
+          data-product-Id="${product.id}">
             Add to Cart
           </button>
         </div>
@@ -80,55 +81,55 @@ products.forEach((product)=>{
 
 document.querySelector('.js-products-grid').innerHTML = productsHTML;
 
-document.querySelectorAll('.js-add-to-cart').forEach((button)=>{
-  let addedMessageTimeoutId;
+  let addedMessageTimeouts = {};
 
-  function addToCart(productId){
-    let matchingItem;
-    cart.forEach((item)=>{
-      if(productId === item.productId){
-        matchingItem = item;
-      }
-    })
-    const quantitySelector = document.querySelector(`.js-quantity-selector-${productId}`);
+ 
 
-    const quantity = Number(quantitySelector.value);
-    
-    if(matchingItem){
-      matchingItem.quantity += quantity;
-    }
-    else{
-      cart.push({
-        productId,
-        quantity
-      });
-    }
-  }
+  updateCartQuantity();
 
-  button.addEventListener('click',()=>{
-    let {productId} = button.dataset;
-    addToCart(productId);
-    
-
-    let cartQuantity = 0;
-
-    cart.forEach((item)=>{
-      cartQuantity += item.quantity;
-    })
-    console.log(cart);
-    document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
-    const addedMessage = document.querySelector(`.js-added-to-cart-${productId}`);
-    addedMessage.classList.add('added-to-cart-visible');
-
-    if(addedMessageTimeoutId){
-      clearTimeout(addedMessageTimeoutId);
-    }
-
-    const timeoutId = setTimeout(() => {
-      addedMessage.classList.remove('added-to-cart-visible');
-    }, 2000);
-
-    addedMessageTimeoutId = timeoutId;
-
+  document.querySelectorAll('.js-add-to-cart')
+  .forEach((button) => {
+    button.addEventListener('click', () => {
+      const productId = button.dataset.productId;
+      addToCart(productId);
+      updateCartQuantity();
+    });
   });
-});
+
+
+
+
+      
+  //     if (matchingItem) {
+  //       matchingItem.quantity += quantity;
+  //     } else {
+  //       cart.push({
+  //         productName,
+  //         quantity
+  //       });
+  //     }
+  //     let cartQuantity = 0;
+  //     cart.forEach((item) => {
+  //       cartQuantity += item.quantity;
+  //     });
+  //     document.querySelector('.js-cart-quantity')
+  //       .innerHTML = cartQuantity;
+  //     const addedMessage = document.querySelector(
+  //       `.js-added-to-cart-${productId}`
+  //     );
+
+  //     addedMessage.classList.add('added-to-cart-visible');
+  //     const previousTimeoutId = addedMessageTimeouts[productId];
+  //     if (previousTimeoutId) {
+  //       clearTimeout(previousTimeoutId);
+  //     }
+
+  //     const timeoutId = setTimeout(() => {
+  //       addedMessage.classList.remove('added-to-cart-visible');
+  //     }, 2000);
+
+  //     // Save the timeoutId for this product
+  //     // so we can stop it later if we need to.
+  //     addedMessageTimeouts[productId] = timeoutId;
+  //   });
+  // });
