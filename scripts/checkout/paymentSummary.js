@@ -1,7 +1,10 @@
-import {cart} from "../../data/cart.js";
+import {cart, calculateCartQuantity} from "../../data/cart.js";
 import {getProduct} from "../../data/products.js";
 import { getDeliveryOption } from "../../data/deliveryOptions.js";
 import { formatCurrency } from "../utils/money.js";
+
+import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
+
 
 export function renderPaymentSummary(){
   let productPriceCents = 0;
@@ -19,13 +22,15 @@ export function renderPaymentSummary(){
    let taxCents = totalBeforeTaxCents * 0.1;
    let totalCents = totalBeforeTaxCents + taxCents;
 
+   let cartQuantity = calculateCartQuantity();
+
    let paymentSummaryHTML = `
           <div class="payment-summary-title">
             Order Summary
           </div>
 
           <div class="payment-summary-row">
-            <div>Items (3):</div>
+            <div>Items (${cartQuantity}):</div>
             <div class="payment-summary-money">$${formatCurrency(productPriceCents)}</div>
           </div>
 
@@ -56,3 +61,8 @@ export function renderPaymentSummary(){
 
    document.querySelector('.js-payment-summary').innerHTML = paymentSummaryHTML;
 }
+
+
+
+
+
