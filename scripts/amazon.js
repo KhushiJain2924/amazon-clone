@@ -1,26 +1,10 @@
 import {cart, addToCart,updateCartQuantity ,calculateCartQuantity} from '../data/cart.js';
-import {products} from '../data/products.js';
+import {products,loadProducts} from '../data/products.js';
 import { formatCurrency } from './utils/money.js';
 
-// [{
-//   image: 'images/products/athletic-cotton-socks-6-pairs.jpg',
-//   name: 'Black and Gray Athletic Cotton Socks - 6 Pairs',
-//   rating: {
-//     stars: 4.5,
-//     count: 87
-//   },
-//   priceCents: 1090
-// },
-// {
-//   image: 'images/products/intermediate-composite-basketball.jpg',
-//   name: 'Intermediate Size Basketball',
-//   rating:{
-//     stars: 4.0,
-//     count: 127
-//   },
-//   priceCents: 2095
-// }]
+loadProducts(renderProductsGrid);
 
+function renderProductsGrid(){
 let productsHTML ='';
 
 products.forEach((product)=>{
@@ -62,6 +46,8 @@ products.forEach((product)=>{
             </select>
           </div>
 
+       ${product.extraInfoHTML()}
+
           <div class="product-spacer"></div>
 
           <div class="added-to-cart js-added-to-cart-${product.id}">
@@ -75,8 +61,7 @@ products.forEach((product)=>{
           </button>
         </div>
   `
-})
-
+});
 
 
 document.querySelector('.js-products-grid').innerHTML = productsHTML;
@@ -90,6 +75,7 @@ document.querySelector('.js-products-grid').innerHTML = productsHTML;
       updateCartQuantity();
     });
   });
+}
 
 
 
