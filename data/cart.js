@@ -120,3 +120,15 @@ export function updateDeliveryOption(productId, deliveryOptionId){
     // }, 2000);
     // addedMessageTimeouts[productId] = timeoutId;
   }
+
+  export function loadCart(fun){
+   let xhr = new XMLHttpRequest();
+  
+    xhr.addEventListener('load',()=>{
+      console.log(xhr.response);
+      fun();
+    });
+  
+   xhr.open('GET','https://supersimplebackend.dev/products');
+   xhr.send();
+  }
