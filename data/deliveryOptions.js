@@ -1,4 +1,5 @@
-import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
+//import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
+import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js'
 
 export let deliveryOptions = [{
   id: '1',
@@ -33,7 +34,6 @@ function isWeekend(date) {
 export function calculateDeliveryDate(deliveryOption){
   let remainingDays = deliveryOption.deliveryDays;
   let deliveryDate = dayjs();
-
   while (remainingDays > 0) {
     deliveryDate = deliveryDate.add(1, 'day');
 
